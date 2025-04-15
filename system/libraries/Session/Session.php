@@ -283,89 +283,76 @@ class CI_Session {
 	{
 		$expiration = config_item('sess_expiration');
 
-		if (isset($params['cookie_lifetime']))
-		{
-			$params['cookie_lifetime'] = (int) $params['cookie_lifetime'];
-		}
-		else
-		{
-			$params['cookie_lifetime'] = ( ! isset($expiration) && config_item('sess_expire_on_close'))
-				? 0 : (int) $expiration;
+		if (isset($params['cookie_lifetime'])) {
+			$params['cookie_lifetime'] = (int)$params['cookie_lifetime'];
+		} else {
+			$params['cookie_lifetime'] = (!isset($expiration) && config_item('sess_expire_on_close'))
+				? 0 : (int)$expiration;
 		}
 
-		isset($params['cookie_name']) OR $params['cookie_name'] = config_item('sess_cookie_name');
-		if (empty($params['cookie_name']))
-		{
+		isset($params['cookie_name']) or $params['cookie_name'] = config_item('sess_cookie_name');
+		if (empty($params['cookie_name'])) {
 			$params['cookie_name'] = ini_get('session.name');
-		}
-		else
-		{
+		} else {
 			ini_set('session.name', $params['cookie_name']);
 		}
 
-		isset($params['cookie_path']) OR $params['cookie_path'] = config_item('cookie_path');
-		isset($params['cookie_domain']) OR $params['cookie_domain'] = config_item('cookie_domain');
-		isset($params['cookie_secure']) OR $params['cookie_secure'] = (bool) config_item('cookie_secure');
+		isset($params['cookie_path']) or $params['cookie_path'] = config_item('cookie_path');
+		isset($params['cookie_domain']) or $params['cookie_domain'] = config_item('cookie_domain');
+		isset($params['cookie_secure']) or $params['cookie_secure'] = (bool)config_item('cookie_secure');
 
-		isset($params['cookie_samesite']) OR $params['cookie_samesite'] = config_item('sess_samesite');
-		if ( ! isset($params['cookie_samesite']) && is_php('7.3'))
-		{
+		isset($params['cookie_samesite']) or $params['cookie_samesite'] = config_item('sess_samesite');
+		if (!isset($params['cookie_samesite']) && is_php('7.3')) {
 			$params['cookie_samesite'] = ini_get('session.cookie_samesite');
 		}
 
-		if (isset($params['cookie_samesite']))
-		{
+		if (isset($params['cookie_samesite'])) {
 			$params['cookie_samesite'] = ucfirst(strtolower($params['cookie_samesite']));
-			in_array($params['cookie_samesite'], array('Lax', 'Strict', 'None'), TRUE) OR $params['cookie_samesite'] = 'Lax';
-		}
-		else
-		{
+			in_array($params['cookie_samesite'], array('Lax', 'Strict', 'None'), TRUE) or $params['cookie_samesite'] = 'Lax';
+		} else {
 			$params['cookie_samesite'] = 'Lax';
 		}
 
-		if (is_php('7.3'))
-		{
+		if (is_php('7.3')) {
 			session_set_cookie_params(array(
 				'lifetime' => $params['cookie_lifetime'],
-				'path'     => $params['cookie_path'],
-				'domain'   => $params['cookie_domain'],
-				'secure'   => $params['cookie_secure'],
+				'path' => $params['cookie_path'],
+				'domain' => $params['cookie_domain'],
+				'secure' => $params['cookie_secure'],
 				'httponly' => TRUE,
 				'samesite' => $params['cookie_samesite']
 			));
-		}
-		else
-		{
+		} else {
 			session_set_cookie_params(
 				$params['cookie_lifetime'],
-				$params['cookie_path'].'; SameSite='.$params['cookie_samesite'],
+				$params['cookie_path'] . '; SameSite=' . $params['cookie_samesite'],
 				$params['cookie_domain'],
 				$params['cookie_secure'],
 				TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
 			);
 		}
 
-		if (empty($expiration))
-		{
-			$params['expiration'] = (int) ini_get('session.gc_maxlifetime');
-		}
-		else
-		{
-			$params['expiration'] = (int) $expiration;
+		if (empty($expiration)) {
+			$params['expiration'] = (int)ini_get('session.gc_maxlifetime');
+		} else {
+			$params['expiration'] = (int)$expiration;
 			ini_set('session.gc_maxlifetime', $expiration);
 		}
 
-		$params['match_ip'] = (bool) (isset($params['match_ip']) ? $params['match_ip'] : config_item('sess_match_ip'));
+		$params['match_ip'] = (bool)(isset($params['match_ip']) ? $params['match_ip'] : config_item('sess_match_ip'));
 
-		isset($params['save_path']) OR $params['save_path'] = config_item('sess_save_path');
+		isset($params['save_path']) or $params['save_path'] = config_item('sess_save_path');
 
 		$this->_config = $params;
 
 		// Security is king
-		ini_set('session.use_trans_sid', 0);
 		ini_set('session.use_strict_mode', 1);
 		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
+
+		if (PHP_VERSION_ID < 80400) {
+			ini_set('session.use_trans_sid', 0);
+			ini_set('session.use_only_cookies', 1);
+		}
 
 		$this->_configure_sid_length();
 	}
@@ -419,7 +406,7 @@ class CI_Session {
 		{
 			$bits_per_character = (int) ini_get('session.sid_bits_per_character');
 			$sid_length         = (int) ini_get('session.sid_length');
-			if (($bits = $sid_length * $bits_per_character) < 160)
+			if (($bits = $sid_length * $bits_per_character) < 160 && PHP_VERSION_ID < 80400)
 			{
 				// Add as many more characters as necessary to reach at least 160 bits
 				$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
