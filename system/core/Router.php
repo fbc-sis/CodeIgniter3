@@ -446,7 +446,7 @@ class CI_Router {
 	 * @deprecated	3.0.0	Read the 'class' property instead
 	 * @return	string
 	 */
-	public function fetch_class()
+	public function fetch_class(): string
 	{
 		return $this->class;
 	}
@@ -472,7 +472,7 @@ class CI_Router {
 	 * @deprecated	3.0.0	Read the 'method' property instead
 	 * @return	string
 	 */
-	public function fetch_method()
+	public function fetch_method(): string
 	{
 		return $this->method;
 	}
@@ -509,7 +509,7 @@ class CI_Router {
 	 * @deprecated	3.0.0	Read the 'directory' property instead
 	 * @return	string
 	 */
-	public function fetch_directory()
+	public function fetch_directory(): string
 	{
 		return $this->directory;
 	}
