@@ -2,6 +2,8 @@
 
 class Security_test extends CI_TestCase {
 
+	private Mock_Core_Security $security;
+
 	public function set_up()
 	{
 		// Set cookie for security test

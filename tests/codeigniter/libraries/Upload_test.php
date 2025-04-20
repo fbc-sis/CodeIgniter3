@@ -2,6 +2,8 @@
 
 class Upload_test extends CI_TestCase {
 
+	private CI_Upload $upload;
+
 	public function set_up()
 	{
 		$ci = $this->ci_instance();
@@ -77,7 +79,9 @@ class Upload_test extends CI_TestCase {
 
 		foreach ($data as $k => $v)
 		{
-			$this->upload->{$k}	= $v;
+			if(!in_array($k, ['raw_name', 'full_path', 'file_path'])){
+				$this->upload->{$k}	= $v;
+			}
 		}
 
 		$this->assertEquals('hello.txt', $this->upload->data('file_name'));

@@ -2,6 +2,8 @@
 
 class Input_test extends CI_TestCase {
 
+	private Mock_Core_Input $input;
+
 	public function set_up()
 	{
 		// Set server variable to GET as default, since this will leave unset in STDIN env

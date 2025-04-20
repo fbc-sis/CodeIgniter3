@@ -5,6 +5,7 @@ class CI_TestCase extends \PHPUnit\Framework\TestCase {
 	public $ci_vfs_root;
 	public $ci_app_root;
 	public $ci_base_root;
+	public $ci_view_root;
 	protected $ci_instance;
 	protected static $ci_test_instance;
 

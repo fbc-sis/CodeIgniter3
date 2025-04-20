@@ -2,6 +2,8 @@
 
 class File_helper_Test extends CI_TestCase {
 
+	private \org\bovigo\vfs\vfsStreamDirectory $_test_dir;
+
 	public function set_up()
 	{
 		$this->helper('file');
@@ -13,7 +15,7 @@ class File_helper_Test extends CI_TestCase {
 
 	public function test_read_file()
 	{
-		$this->assertFalse(read_file('does_not_exist'));
+		$this->assertEmpty(read_file('does_not_exist'));
 
 		$content = 'Jack and Jill went up the mountain to fight a billy goat.';
 

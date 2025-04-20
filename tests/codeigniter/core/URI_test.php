@@ -2,6 +2,8 @@
 
 class URI_test extends CI_TestCase {
 
+	private Mock_Core_URI $uri;
+
 	public function set_up()
 	{
 		$this->uri = new Mock_Core_URI();

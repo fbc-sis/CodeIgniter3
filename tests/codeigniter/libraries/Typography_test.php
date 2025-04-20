@@ -2,6 +2,8 @@
 
 class Typography_test extends CI_TestCase {
 
+	private CI_Typography $type;
+
 	public function set_up()
 	{
 		$this->type = new CI_Typography();

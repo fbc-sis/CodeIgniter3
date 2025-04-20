@@ -2,6 +2,8 @@
 
 class Table_test extends CI_TestCase {
 
+	private Mock_Libraries_Table $table;
+
 	public function set_up()
 	{
 		$this->table = new Mock_Libraries_Table();

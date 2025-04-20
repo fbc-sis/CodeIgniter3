@@ -3,6 +3,7 @@
 class Model_test extends CI_TestCase {
 
 	private $ci_obj;
+	private $load;
 
 	public function set_up()
 	{

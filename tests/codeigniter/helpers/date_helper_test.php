@@ -2,6 +2,8 @@
 
 class Date_helper_test extends CI_TestCase {
 
+	private int $time;
+
 	public function set_up()
 	{
 		$this->helper('date');

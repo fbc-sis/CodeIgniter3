@@ -2,6 +2,8 @@
 
 class Benchmark_test extends CI_TestCase {
 
+	private CI_Benchmark $benchmark;
+
 	public function set_up()
 	{
 		$this->benchmark = new CI_Benchmark();

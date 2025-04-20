@@ -2,6 +2,12 @@
 
 class Config_test extends CI_TestCase {
 
+	/**
+	 * @var array|string[]
+	 */
+	private array $cfg;
+	private $config;
+
 	public function set_up()
 	{
 		$cls =& $this->ci_core_class('cfg');
