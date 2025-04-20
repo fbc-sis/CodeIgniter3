@@ -67,6 +67,7 @@ class CI_Exceptions {
 		E_WARNING		=>	'Warning',
 		E_PARSE			=>	'Parsing Error',
 		E_NOTICE		=>	'Notice',
+		E_DEPRECATED		=>	'Deprecated Notice',
 		E_CORE_ERROR		=>	'Core Error',
 		E_CORE_WARNING		=>	'Core Warning',
 		E_COMPILE_ERROR		=>	'Compile Error',
@@ -74,7 +75,8 @@ class CI_Exceptions {
 		E_USER_ERROR		=>	'User Error',
 		E_USER_WARNING		=>	'User Warning',
 		E_USER_NOTICE		=>	'User Notice',
-		2048		=>	'Runtime Notice' // E_STRICT, deprecated in PHP 8.4
+		E_USER_DEPRECATED		=>	'User Deprecated Notice',
+		2048		=>	'Strict Notice' // E_STRICT, deprecated in PHP 8.4
 	);
 
 	/**
