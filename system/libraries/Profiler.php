@@ -57,10 +57,8 @@ class CI_Profiler {
 
 	/**
 	 * List of profiler sections available to show
-	 *
-	 * @var array
 	 */
-	protected $_available_sections = array(
+	protected array $_available_sections = array(
 		'benchmarks',
 		'get',
 		'memory_usage',
@@ -73,19 +71,28 @@ class CI_Profiler {
 		'config'
 	);
 
+	protected bool $_compile_benchmarks;
+	protected bool $_compile_get;
+	protected bool $_compile_memory_usage;
+	protected bool $_compile_post;
+	protected bool $_compile_uri_string;
+	protected bool $_compile_controller_info;
+	protected bool $_compile_queries;
+	protected bool $_compile_http_headers;
+	protected bool $_compile_session_data;
+	protected bool $_compile_config;
+
 	/**
 	 * Number of queries to show before making the additional queries togglable
-	 *
-	 * @var int
 	 */
-	protected $_query_toggle_count = 25;
+	protected int $_query_toggle_count = 25;
 
 	/**
 	 * Reference to the CodeIgniter singleton
 	 *
 	 * @var object
 	 */
-	protected $CI;
+	protected CI_Controller $CI;
 
 	// --------------------------------------------------------------------
 
